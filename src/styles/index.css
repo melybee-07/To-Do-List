@@ -1,3 +1,97 @@
 body {
-  background-color: bisque;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#todo-list {
+  width: 40%;
+  box-shadow: 1px 2px 8px rgb(152, 150, 150);
+  border-radius: 4px;
+  margin: 50px auto;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: -10px;
+}
+
+li {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-bottom: 15px;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+
+h3 {
+  padding: 15px 10px;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+
+h3::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  right: 2%;
+  width: 20px;
+  height: 20px;
+  background-image: url("../assets/refresh_reload_icon.png");
+  background-size: cover;
+  cursor: pointer;
+}
+
+li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background-image: url("../assets/kebab-menu.png");
+  background-size: cover;
+  cursor: move;
+}
+
+li.selected {
+  background-color: yellow;
+}
+
+li.selected::before {
+  background-image: url("../assets/trash-can-icon.png");
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  margin-right: 15px;
+}
+
+#task-input {
+  width: 97%;
+  padding-left: 12px;
+  padding-bottom: 12px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+}
+
+#clear-button {
+  border: none;
+  background-color: rgb(235, 235, 235);
+  width: 100%;
+  padding: 15px;
+  margin-top: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#clear-button:hover {
+  background-color: rgb(210, 208, 208);
 }
