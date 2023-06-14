@@ -16,14 +16,120 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
 // Imports
 
 
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../assets/refresh_reload_icon.png */ "./src/assets/refresh_reload_icon.png"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../assets/kebab-menu.png */ "./src/assets/kebab-menu.png"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../assets/trash-can-icon.png */ "./src/assets/trash-can-icon.png"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `body {
-  background-color: bisque;
-}`, "",{"version":3,"sources":["webpack://./src/styles/index.css"],"names":[],"mappings":"AAAA;EACE,wBAAA;AACF","sourcesContent":["body {\n  background-color: bisque;\n}\n"],"sourceRoot":""}]);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#todo-list {
+  width: 40%;
+  box-shadow: 1px 2px 8px rgb(152, 150, 150);
+  border-radius: 4px;
+  margin: 50px auto;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: -10px;
+}
+
+li {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-bottom: 15px;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+
+h3 {
+  padding: 15px 10px;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+
+h3::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  right: 2%;
+  width: 20px;
+  height: 20px;
+  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
+  background-size: cover;
+  cursor: pointer;
+}
+
+li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+}
+
+li::before {
+  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});
+  background-size: cover;
+  cursor: move;
+}
+
+li.selected {
+  background-color: yellow;
+}
+
+li.selected::before {
+  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_2___});
+  cursor: pointer;
+}
+
+input[type=checkbox] {
+  margin-right: 15px;
+}
+
+#task-input {
+  width: 97%;
+  padding-left: 12px;
+  padding-bottom: 12px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+}
+
+#clear-button {
+  border: none;
+  background-color: rgb(235, 235, 235);
+  width: 100%;
+  padding: 15px;
+  margin-top: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#clear-button:hover {
+  background-color: rgb(210, 208, 208);
+}`, "",{"version":3,"sources":["webpack://./src/styles/index.css"],"names":[],"mappings":"AAAA;EACE,8BAAA;EACA,SAAA;EACA,aAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,0CAAA;EACA,kBAAA;EACA,iBAAA;AACF;;AAEA;EACE,qBAAA;EACA,UAAA;EACA,oBAAA;AACF;;AAEA;EACE,mBAAA;EACA,kBAAA;EACA,oBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,kBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;EACA,YAAA;EACA,yDAAA;EACA,sBAAA;EACA,eAAA;AACF;;AAEA;EACE,WAAA;EACA,kBAAA;EACA,MAAA;EACA,WAAA;EACA,WAAA;EACA,YAAA;AACF;;AAEA;EACE,yDAAA;EACA,sBAAA;EACA,YAAA;AACF;;AAEA;EACE,wBAAA;AACF;;AAEA;EACE,yDAAA;EACA,eAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,kBAAA;EACA,oBAAA;EACA,eAAA;EACA,YAAA;EACA,6BAAA;EACA,aAAA;AACF;;AAEA;EACE,YAAA;EACA,oCAAA;EACA,WAAA;EACA,aAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;AACF;;AAEA;EACE,oCAAA;AACF","sourcesContent":["body {\n  font-family: Arial, sans-serif;\n  margin: 0;\n  padding: 20px;\n}\n\nh1 {\n  text-align: center;\n}\n\n#todo-list {\n  width: 40%;\n  box-shadow: 1px 2px 8px rgb(152, 150, 150);\n  border-radius: 4px;\n  margin: 50px auto;\n}\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin-bottom: -10px;\n}\n\nli {\n  margin-bottom: 10px;\n  padding-left: 10px;\n  padding-bottom: 15px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3 {\n  padding: 15px 10px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3::before {\n  content: \"\";\n  position: absolute;\n  top: 30%;\n  right: 2%;\n  width: 20px;\n  height: 20px;\n  background-image: url(\"../assets/refresh_reload_icon.png\");\n  background-size: cover;\n  cursor: pointer;\n}\n\nli::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 10px;\n  width: 24px;\n  height: 24px;\n}\n\nli::before {\n  background-image: url(\"../assets/kebab-menu.png\");\n  background-size: cover;\n  cursor: move;\n}\n\nli.selected {\n  background-color: yellow;\n}\n\nli.selected::before {\n  background-image: url(\"../assets/trash-can-icon.png\");\n  cursor: pointer;\n}\n\ninput[type=\"checkbox\"] {\n  margin-right: 15px;\n}\n\n#task-input {\n  width: 97%;\n  padding-left: 12px;\n  padding-bottom: 12px;\n  font-size: 16px;\n  border: none;\n  border-bottom: 1px solid #ccc;\n  outline: none;\n}\n\n#clear-button {\n  border: none;\n  background-color: rgb(235, 235, 235);\n  width: 100%;\n  padding: 15px;\n  margin-top: 0;\n  cursor: pointer;\n  font-size: 16px;\n}\n\n#clear-button:hover {\n  background-color: rgb(210, 208, 208);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -120,6 +226,41 @@ module.exports = function (cssWithMappingToString) {
     }
   };
   return list;
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/getUrl.js":
+/*!********************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    options = {};
+  }
+  if (!url) {
+    return url;
+  }
+  url = String(url.__esModule ? url.default : url);
+
+  // If url is already wrapped in quotes, remove them
+  if (/^['"].*['"]$/.test(url)) {
+    url = url.slice(1, -1);
+  }
+  if (options.hash) {
+    url += options.hash;
+  }
+
+  // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+  if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+  return url;
 };
 
 /***/ }),
@@ -468,6 +609,36 @@ function styleTagTransform(css, styleElement) {
 }
 module.exports = styleTagTransform;
 
+/***/ }),
+
+/***/ "./src/assets/kebab-menu.png":
+/*!***********************************!*\
+  !*** ./src/assets/kebab-menu.png ***!
+  \***********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "kebab-menu.png";
+
+/***/ }),
+
+/***/ "./src/assets/refresh_reload_icon.png":
+/*!********************************************!*\
+  !*** ./src/assets/refresh_reload_icon.png ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "refresh_reload_icon.png";
+
+/***/ }),
+
+/***/ "./src/assets/trash-can-icon.png":
+/*!***************************************!*\
+  !*** ./src/assets/trash-can-icon.png ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "trash-can-icon.png";
+
 /***/ })
 
 /******/ 	});
@@ -496,6 +667,9 @@ module.exports = styleTagTransform;
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -521,6 +695,18 @@ module.exports = styleTagTransform;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -537,6 +723,55 @@ module.exports = styleTagTransform;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"main": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// no jsonp function
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/nonce */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nc = undefined;
@@ -551,9 +786,128 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/index.css */ "./src/styles/index.css");
+/* harmony import */ var _assets_kebab_menu_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/kebab-menu.png */ "./src/assets/kebab-menu.png");
+/* harmony import */ var _assets_trash_can_icon_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assets/trash-can-icon.png */ "./src/assets/trash-can-icon.png");
+/* harmony import */ var _assets_refresh_reload_icon_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./assets/refresh_reload_icon.png */ "./src/assets/refresh_reload_icon.png");
 
+
+
+
+var tasks = [{
+  description: "Task 1",
+  completed: false,
+  index: 1
+}, {
+  description: "Task 2",
+  completed: true,
+  index: 2
+}, {
+  description: "Task 3",
+  completed: false,
+  index: 3
+}];
+function renderTasks() {
+  var taskList = document.getElementById("task-list");
+  taskList.innerHTML = "";
+  tasks.forEach(function (task, index) {
+    var listItem = document.createElement("li");
+    listItem.draggable = true; // Enable draggable for list item
+
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
+    checkbox.addEventListener("change", function () {
+      tasks[index].completed = checkbox.checked;
+      renderTasks();
+    });
+    var label = document.createElement("label");
+    label.innerText = task.description;
+    label.style.textDecoration = task.completed ? "line-through" : "none";
+    var kebabMenu = document.createElement("div");
+    kebabMenu.className = "kebab-menu";
+
+    // Add event listener for clicking the list item
+    listItem.addEventListener("click", function () {
+      listItem.classList.toggle("selected"); // Toggle the "selected" class on click
+    });
+
+    // Add event listener for clicking the trash can icon
+    kebabMenu.addEventListener("click", function (event) {
+      event.stopPropagation(); // Prevent the click event from propagating to the list item
+
+      var index = tasks.findIndex(function (task) {
+        return task.description === label.innerText;
+      });
+      tasks.splice(index, 1); // Remove the corresponding task from the array
+
+      renderTasks();
+    });
+    listItem.appendChild(checkbox);
+    listItem.appendChild(label);
+    listItem.appendChild(kebabMenu);
+    taskList.appendChild(listItem);
+  });
+}
+function addTask(event) {
+  if (event.key === "Enter") {
+    var taskInput = document.getElementById("task-input");
+    var description = taskInput.value.trim();
+    if (description !== "") {
+      var newTask = {
+        description: description,
+        completed: false,
+        index: tasks.length + 1
+      };
+      tasks.push(newTask);
+      renderTasks();
+      taskInput.value = "";
+    }
+  }
+}
+function clearCompletedTasks() {
+  var completedTasks = tasks.filter(function (task) {
+    return task.completed;
+  });
+  completedTasks.forEach(function (task) {
+    var index = tasks.indexOf(task);
+    tasks.splice(index, 1);
+  });
+  renderTasks();
+}
+
+// Drag and drop handlers
+var draggedTask = null;
+function handleDragStart(event) {
+  draggedTask = event.target;
+}
+function handleDragOver(event) {
+  event.preventDefault();
+}
+function handleDrop(event) {
+  event.preventDefault();
+  var droppedTask = event.target;
+  var droppedIndex = Array.from(droppedTask.parentNode.children).indexOf(droppedTask);
+  var draggedIndex = Array.from(draggedTask.parentNode.children).indexOf(draggedTask);
+
+  // Reorder tasks in the array based on the drag and drop
+  if (draggedIndex < droppedIndex) {
+    tasks.splice(droppedIndex, 0, tasks[draggedIndex]);
+    tasks.splice(draggedIndex, 1);
+  } else {
+    tasks.splice(droppedIndex, 0, tasks[draggedIndex]);
+    tasks.splice(draggedIndex + 1, 1);
+  }
+  renderTasks();
+}
+window.addEventListener("DOMContentLoaded", function () {
+  renderTasks();
+  var taskInput = document.getElementById("task-input");
+  taskInput.addEventListener("keyup", addTask);
+  var clearButton = document.getElementById("clear-button");
+  clearButton.addEventListener("click", clearCompletedTasks);
+});
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=mainf7331b830f0556796a3f.js.map
+//# sourceMappingURL=mainafac14811bc47b4ca3e4.js.map
