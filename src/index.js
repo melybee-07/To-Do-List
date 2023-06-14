@@ -1,39 +1,57 @@
-import "./styles/index.css";
-import "./assets/kebab-menu.png";
-import "./assets/trash-can-icon.png";
-import "./assets/refresh_reload_icon.png";
+import './styles/index.css';
+import './assets/kebab-menu.png';
+import './assets/trash-can-icon.png';
+import './assets/refresh_reload_icon.png';
 
 let tasks = [];
 
+function saveTasksToLocalStorage() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function updateTaskIndexes() {
+  tasks.forEach((task, index) => {
+    task.index = index + 1;
+  });
+}
+
 function renderTasks() {
-  const taskList = document.getElementById("task-list");
-  taskList.innerHTML = "";
+  // eslint-disable-next-line no-use-before-define
+  const deleteTask = (index) => {
+    tasks.splice(index, 1);
+    updateTaskIndexes();
+    renderTasks();
+    saveTasksToLocalStorage();
+  };
+
+  const taskList = document.getElementById('task-list');
+  taskList.innerHTML = '';
 
   tasks.forEach((task, index) => {
-    const listItem = document.createElement("li");
+    const listItem = document.createElement('li');
     listItem.draggable = true;
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
     checkbox.checked = task.completed;
-    checkbox.addEventListener("change", () => {
+    checkbox.addEventListener('change', () => {
       tasks[index].completed = checkbox.checked;
       renderTasks();
       saveTasksToLocalStorage();
     });
 
-    const label = document.createElement("label");
+    const label = document.createElement('label');
     label.innerText = task.description;
-    label.style.textDecoration = task.completed ? "line-through" : "none";
+    label.style.textDecoration = task.completed ? 'line-through' : 'none';
 
-    const kebabMenu = document.createElement("div");
-    kebabMenu.className = "kebab-menu";
+    const kebabMenu = document.createElement('div');
+    kebabMenu.className = 'kebab-menu';
 
-    listItem.addEventListener("click", () => {
-      listItem.classList.toggle("selected");
+    listItem.addEventListener('click', () => {
+      listItem.classList.toggle('selected');
     });
 
-    kebabMenu.addEventListener("click", (event) => {
+    kebabMenu.addEventListener('click', (event) => {
       event.stopPropagation();
       deleteTask(index);
     });
@@ -57,25 +75,8 @@ function addTask(description) {
   saveTasksToLocalStorage();
 }
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  updateTaskIndexes();
-  renderTasks();
-  saveTasksToLocalStorage();
-}
-
-function updateTaskIndexes() {
-  tasks.forEach((task, index) => {
-    task.index = index + 1;
-  });
-}
-
-function saveTasksToLocalStorage() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
 function loadTasksFromLocalStorage() {
-  const storedTasks = localStorage.getItem("tasks");
+  const storedTasks = localStorage.getItem('tasks');
   if (storedTasks) {
     tasks = JSON.parse(storedTasks);
     renderTasks();
@@ -89,20 +90,22 @@ function clearCompletedTasks() {
   saveTasksToLocalStorage();
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener('DOMContentLoaded', () => {
   loadTasksFromLocalStorage();
 
-  const taskInput = document.getElementById("task-input");
-  taskInput.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
+  const taskInput = document.getElementById('task-input');
+  taskInput.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
       const description = taskInput.value.trim();
-      if (description !== "") {
+      if (description !== '') {
         addTask(description);
-        taskInput.value = "";
+        taskInput.value = '';
       }
     }
   });
 
-  const clearButton = document.getElementById("clear-button");
-  clearButton.addEventListener("click", clearCompletedTasks);
+  const clearButton = document.getElementById('clear-button');
+  clearButton.addEventListener('click', clearCompletedTasks);
 });
+
+renderTasks(); // Call renderTasks after all function declarations
