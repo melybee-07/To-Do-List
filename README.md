@@ -2,8 +2,8 @@
 
 <div align="center">
 
-  <h3><b>To Do List
-</b></h3>
+  <h1><b>To Do List
+</b></h1>
 
 </div>
 
