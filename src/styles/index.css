@@ -18,7 +18,6 @@ h1 {
 ul {
   list-style-type: none;
   padding: 0;
-  margin-bottom: -10px;
 }
 
 li {
@@ -27,6 +26,8 @@ li {
   padding-bottom: 15px;
   position: relative;
   border-bottom: 1px solid #ccc;
+  margin-top: -14px;
+  padding-top: 12px;
 }
 
 h3 {
@@ -39,32 +40,11 @@ h3::before {
   content: "";
   position: absolute;
   top: 30%;
-  right: 2%;
+  right: 4%;
   width: 20px;
   height: 20px;
   background-image: url("../assets/refresh_reload_icon.png");
   background-size: cover;
-  cursor: pointer;
-}
-
-li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 10px;
-  width: 24px;
-  height: 24px;
-  background-image: url("../assets/kebab-menu.png");
-  background-size: cover;
-  cursor: move;
-}
-
-li.selected {
-  background-color: yellow;
-}
-
-li.selected::before {
-  background-image: url("../assets/trash-can-icon.png");
   cursor: pointer;
 }
 
@@ -87,11 +67,41 @@ input[type="checkbox"] {
   background-color: rgb(235, 235, 235);
   width: 100%;
   padding: 15px;
-  margin-top: 0;
+  margin-top: -14px;
   cursor: pointer;
   font-size: 16px;
 }
 
 #clear-button:hover {
   background-color: rgb(210, 208, 208);
+}
+
+.completed {
+  text-decoration: line-through;
+  color: rgb(127, 122, 122);
+}
+
+.kebab-menu {
+  width: 25px;
+  cursor: move;
+  background-size: cover;
+  height: 24px;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+}
+
+.trash-can-icon {
+  width: 25px;
+  cursor: pointer;
+  background-size: cover;
+  height: 24px;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+}
+
+span.editable {
+  border: none;
+  outline: none;
 }
