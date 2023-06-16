@@ -5,6 +5,11 @@ export function renderTaskList(tasks) {
     const taskIndex = tasks.findIndex((t) => t.index === task.index);
     if (taskIndex !== -1) {
       tasks.splice(taskIndex, 1);
+
+      for (let i = taskIndex; i < tasks.length; i += 1) {
+        tasks[i].index -= 1;
+      }
+
       saveTasks(tasks);
       renderTaskList(tasks);
     }
