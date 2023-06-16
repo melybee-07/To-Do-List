@@ -2,6 +2,136 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/taskManager.js":
+/*!****************************!*\
+  !*** ./src/taskManager.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addTask: () => (/* binding */ addTask),
+/* harmony export */   clearCompletedTasks: () => (/* binding */ clearCompletedTasks),
+/* harmony export */   deleteTask: () => (/* binding */ deleteTask),
+/* harmony export */   loadTasksFromLocalStorage: () => (/* binding */ loadTasksFromLocalStorage),
+/* harmony export */   saveTasksToLocalStorage: () => (/* binding */ saveTasksToLocalStorage),
+/* harmony export */   updateTaskIndexes: () => (/* binding */ updateTaskIndexes)
+/* harmony export */ });
+var tasks = [];
+function addTask(description) {
+  var newTask = {
+    description: description,
+    completed: false,
+    index: tasks.length + 1
+  };
+  tasks.push(newTask);
+  renderTasks();
+  saveTasksToLocalStorage();
+}
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  updateTaskIndexes();
+  renderTasks();
+  saveTasksToLocalStorage();
+}
+function updateTaskIndexes() {
+  tasks.forEach(function (task, index) {
+    task.index = index + 1;
+  });
+}
+function clearCompletedTasks() {
+  tasks = tasks.filter(function (task) {
+    return !task.completed;
+  });
+  updateTaskIndexes();
+  renderTasks();
+  saveTasksToLocalStorage();
+}
+function saveTasksToLocalStorage() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+function loadTasksFromLocalStorage() {
+  var storedTasks = localStorage.getItem("tasks");
+  if (storedTasks) {
+    tasks = JSON.parse(storedTasks);
+    renderTasks();
+  }
+}
+
+/***/ }),
+
+/***/ "./src/taskRenderer.js":
+/*!*****************************!*\
+  !*** ./src/taskRenderer.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderTasks: () => (/* binding */ renderTasks)
+/* harmony export */ });
+/* harmony import */ var _assets_kebab_menu_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./assets/kebab-menu.png */ "./src/assets/kebab-menu.png");
+/* harmony import */ var _assets_trash_can_icon_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/trash-can-icon.png */ "./src/assets/trash-can-icon.png");
+/* harmony import */ var _taskManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./taskManager */ "./src/taskManager.js");
+
+
+
+function renderTasks() {
+  var deleteTaskHandler = function deleteTaskHandler(index) {
+    (0,_taskManager__WEBPACK_IMPORTED_MODULE_2__.deleteTask)(index);
+  };
+  var taskList = document.getElementById("task-list");
+  taskList.innerHTML = "";
+  _taskManager__WEBPACK_IMPORTED_MODULE_2__.tasks.forEach(function (task, index) {
+    var listItem = document.createElement("li");
+    listItem.draggable = true;
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
+    checkbox.addEventListener("change", function () {
+      _taskManager__WEBPACK_IMPORTED_MODULE_2__.tasks[index].completed = checkbox.checked;
+      renderTasks();
+      (0,_taskManager__WEBPACK_IMPORTED_MODULE_2__.saveTasksToLocalStorage)();
+    });
+    var label = document.createElement("label");
+    label.innerText = task.description;
+    label.style.textDecoration = task.completed ? "line-through" : "none";
+    listItem.addEventListener("click", function () {
+      listItem.classList.toggle("selected");
+    });
+    var kebabMenu = document.createElement("div");
+    kebabMenu.className = "kebab-menu";
+    var kebabIconImg = document.createElement("img");
+    kebabIconImg.src = _assets_kebab_menu_png__WEBPACK_IMPORTED_MODULE_0__;
+    kebabIconImg.alt = "Kebab Icon";
+    kebabIconImg.className = "icon";
+    kebabIconImg.addEventListener("click", function (event) {
+      event.stopPropagation();
+      listItem.classList.toggle("selected");
+      renderTasks();
+    });
+    var trashIconImg = document.createElement("img");
+    trashIconImg.src = _assets_trash_can_icon_png__WEBPACK_IMPORTED_MODULE_1__;
+    trashIconImg.alt = "Trash Can Icon";
+    trashIconImg.className = "icon trash-icon";
+    trashIconImg.addEventListener("click", function (event) {
+      event.stopPropagation();
+      deleteTaskHandler(index);
+    });
+    if (task.completed) {
+      kebabIconImg.style.display = "none";
+    }
+    kebabMenu.appendChild(kebabIconImg);
+    kebabMenu.appendChild(trashIconImg);
+    listItem.appendChild(kebabMenu);
+    listItem.appendChild(checkbox);
+    listItem.appendChild(label);
+    taskList.appendChild(listItem);
+  });
+}
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/index.css":
 /*!***********************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/styles/index.css ***!
@@ -79,27 +209,47 @@ h3::before {
   cursor: pointer;
 }
 
-li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 10px;
-  width: 24px;
-  height: 24px;
-}
-
-li::before {
-  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});
-  background-size: cover;
-  cursor: move;
-}
-
 li.selected {
   background-color: yellow;
 }
 
-li.selected::before {
+.icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.trash-icon {
+  display: none;
+}
+
+li.selected .icon {
+  display: none;
+}
+
+li.selected .trash-icon {
+  display: inline-block;
+}
+
+.kebab-menu {
+  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 0;
+  right: 36px;
+  cursor: pointer;
+}
+
+.trash-can-icon {
   background-image: url(${___CSS_LOADER_URL_REPLACEMENT_2___});
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 0;
+  right: 10px;
   cursor: pointer;
 }
 
@@ -129,7 +279,7 @@ input[type=checkbox] {
 
 #clear-button:hover {
   background-color: rgb(210, 208, 208);
-}`, "",{"version":3,"sources":["webpack://./src/styles/index.css"],"names":[],"mappings":"AAAA;EACE,8BAAA;EACA,SAAA;EACA,aAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,0CAAA;EACA,kBAAA;EACA,iBAAA;AACF;;AAEA;EACE,qBAAA;EACA,UAAA;EACA,oBAAA;AACF;;AAEA;EACE,mBAAA;EACA,kBAAA;EACA,oBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,kBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;EACA,YAAA;EACA,yDAAA;EACA,sBAAA;EACA,eAAA;AACF;;AAEA;EACE,WAAA;EACA,kBAAA;EACA,MAAA;EACA,WAAA;EACA,WAAA;EACA,YAAA;AACF;;AAEA;EACE,yDAAA;EACA,sBAAA;EACA,YAAA;AACF;;AAEA;EACE,wBAAA;AACF;;AAEA;EACE,yDAAA;EACA,eAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,kBAAA;EACA,oBAAA;EACA,eAAA;EACA,YAAA;EACA,6BAAA;EACA,aAAA;AACF;;AAEA;EACE,YAAA;EACA,oCAAA;EACA,WAAA;EACA,aAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;AACF;;AAEA;EACE,oCAAA;AACF","sourcesContent":["body {\n  font-family: Arial, sans-serif;\n  margin: 0;\n  padding: 20px;\n}\n\nh1 {\n  text-align: center;\n}\n\n#todo-list {\n  width: 40%;\n  box-shadow: 1px 2px 8px rgb(152, 150, 150);\n  border-radius: 4px;\n  margin: 50px auto;\n}\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin-bottom: -10px;\n}\n\nli {\n  margin-bottom: 10px;\n  padding-left: 10px;\n  padding-bottom: 15px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3 {\n  padding: 15px 10px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3::before {\n  content: \"\";\n  position: absolute;\n  top: 30%;\n  right: 2%;\n  width: 20px;\n  height: 20px;\n  background-image: url(\"../assets/refresh_reload_icon.png\");\n  background-size: cover;\n  cursor: pointer;\n}\n\nli::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 10px;\n  width: 24px;\n  height: 24px;\n}\n\nli::before {\n  background-image: url(\"../assets/kebab-menu.png\");\n  background-size: cover;\n  cursor: move;\n}\n\nli.selected {\n  background-color: yellow;\n}\n\nli.selected::before {\n  background-image: url(\"../assets/trash-can-icon.png\");\n  cursor: pointer;\n}\n\ninput[type=\"checkbox\"] {\n  margin-right: 15px;\n}\n\n#task-input {\n  width: 97%;\n  padding-left: 12px;\n  padding-bottom: 12px;\n  font-size: 16px;\n  border: none;\n  border-bottom: 1px solid #ccc;\n  outline: none;\n}\n\n#clear-button {\n  border: none;\n  background-color: rgb(235, 235, 235);\n  width: 100%;\n  padding: 15px;\n  margin-top: 0;\n  cursor: pointer;\n  font-size: 16px;\n}\n\n#clear-button:hover {\n  background-color: rgb(210, 208, 208);\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/styles/index.css"],"names":[],"mappings":"AAAA;EACE,8BAAA;EACA,SAAA;EACA,aAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,0CAAA;EACA,kBAAA;EACA,iBAAA;AACF;;AAEA;EACE,qBAAA;EACA,UAAA;EACA,oBAAA;AACF;;AAEA;EACE,mBAAA;EACA,kBAAA;EACA,oBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,kBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;EACA,YAAA;EACA,yDAAA;EACA,sBAAA;EACA,eAAA;AACF;;AAEA;EACE,wBAAA;AACF;;AAEA;EACE,WAAA;EACA,YAAA;EACA,eAAA;AACF;;AAEA;EACE,aAAA;AACF;;AAEA;EACE,aAAA;AACF;;AAEA;EACE,qBAAA;AACF;;AAEA;EACE,yDAAA;EACA,sBAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,MAAA;EACA,WAAA;EACA,eAAA;AACF;;AAEA;EACE,yDAAA;EACA,sBAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,MAAA;EACA,WAAA;EACA,eAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,kBAAA;EACA,oBAAA;EACA,eAAA;EACA,YAAA;EACA,6BAAA;EACA,aAAA;AACF;;AAEA;EACE,YAAA;EACA,oCAAA;EACA,WAAA;EACA,aAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;AACF;;AAEA;EACE,oCAAA;AACF","sourcesContent":["body {\n  font-family: Arial, sans-serif;\n  margin: 0;\n  padding: 20px;\n}\n\nh1 {\n  text-align: center;\n}\n\n#todo-list {\n  width: 40%;\n  box-shadow: 1px 2px 8px rgb(152, 150, 150);\n  border-radius: 4px;\n  margin: 50px auto;\n}\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin-bottom: -10px;\n}\n\nli {\n  margin-bottom: 10px;\n  padding-left: 10px;\n  padding-bottom: 15px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3 {\n  padding: 15px 10px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3::before {\n  content: \"\";\n  position: absolute;\n  top: 30%;\n  right: 2%;\n  width: 20px;\n  height: 20px;\n  background-image: url(\"../assets/refresh_reload_icon.png\");\n  background-size: cover;\n  cursor: pointer;\n}\n\nli.selected {\n  background-color: yellow;\n}\n\n.icon {\n  width: 24px;\n  height: 24px;\n  cursor: pointer;\n}\n\n.trash-icon {\n  display: none;\n}\n\nli.selected .icon {\n  display: none;\n}\n\nli.selected .trash-icon {\n  display: inline-block;\n}\n\n.kebab-menu {\n  background-image: url(\"../assets/kebab-menu.png\");\n  background-size: cover;\n  width: 24px;\n  height: 24px;\n  position: absolute;\n  top: 0;\n  right: 36px;\n  cursor: pointer;\n}\n\n.trash-can-icon {\n  background-image: url(\"../assets/trash-can-icon.png\");\n  background-size: cover;\n  width: 24px;\n  height: 24px;\n  position: absolute;\n  top: 0;\n  right: 10px;\n  cursor: pointer;\n}\n\ninput[type=\"checkbox\"] {\n  margin-right: 15px;\n}\n\n#task-input {\n  width: 97%;\n  padding-left: 12px;\n  padding-bottom: 12px;\n  font-size: 16px;\n  border: none;\n  border-bottom: 1px solid #ccc;\n  outline: none;\n}\n\n#clear-button {\n  border: none;\n  background-color: rgb(235, 235, 235);\n  width: 100%;\n  padding: 15px;\n  margin-top: 0;\n  cursor: pointer;\n  font-size: 16px;\n}\n\n#clear-button:hover {\n  background-color: rgb(210, 208, 208);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -786,123 +936,41 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/index.css */ "./src/styles/index.css");
-/* harmony import */ var _assets_kebab_menu_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/kebab-menu.png */ "./src/assets/kebab-menu.png");
-/* harmony import */ var _assets_trash_can_icon_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assets/trash-can-icon.png */ "./src/assets/trash-can-icon.png");
-/* harmony import */ var _assets_refresh_reload_icon_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./assets/refresh_reload_icon.png */ "./src/assets/refresh_reload_icon.png");
+/* harmony import */ var _taskManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./taskManager */ "./src/taskManager.js");
+/* harmony import */ var _taskRenderer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./taskRenderer */ "./src/taskRenderer.js");
 
 
 
-
-var tasks = [{
-  description: "Task 1",
-  completed: false,
-  index: 1
-}, {
-  description: "Task 2",
-  completed: true,
-  index: 2
-}, {
-  description: "Task 3",
-  completed: false,
-  index: 3
-}];
-function renderTasks() {
-  var taskList = document.getElementById("task-list");
-  taskList.innerHTML = "";
-  tasks.forEach(function (task, index) {
-    var listItem = document.createElement("li");
-    listItem.draggable = true; // Enable draggable for list item
-
-    var checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = task.completed;
-    checkbox.addEventListener("change", function () {
-      tasks[index].completed = checkbox.checked;
-      renderTasks();
-    });
-    var label = document.createElement("label");
-    label.innerText = task.description;
-    label.style.textDecoration = task.completed ? "line-through" : "none";
-    var kebabMenu = document.createElement("div");
-    kebabMenu.className = "kebab-menu";
-
-    // Add event listener for clicking the list item
-    listItem.addEventListener("click", function () {
-      listItem.classList.toggle("selected"); // Toggle the "selected" class on click
-    });
-
-    // Add event listener for clicking the trash can icon
-    kebabMenu.addEventListener("click", function (event) {
-      event.stopPropagation(); // Prevent the click event from propagating to the list item
-
-      var index = tasks.findIndex(function (task) {
-        return task.description === label.innerText;
-      });
-      tasks.splice(index, 1); // Remove the corresponding task from the array
-
-      renderTasks();
-    });
-    listItem.appendChild(checkbox);
-    listItem.appendChild(label);
-    listItem.appendChild(kebabMenu);
-    taskList.appendChild(listItem);
-  });
+function addTask(description) {
+  _taskManager__WEBPACK_IMPORTED_MODULE_1__.addTask(description);
 }
-function addTask(event) {
-  if (event.key === "Enter") {
-    var taskInput = document.getElementById("task-input");
-    var description = taskInput.value.trim();
-    if (description !== "") {
-      var newTask = {
-        description: description,
-        completed: false,
-        index: tasks.length + 1
-      };
-      tasks.push(newTask);
-      renderTasks();
-      taskInput.value = "";
-    }
-  }
+function deleteTask(index) {
+  _taskManager__WEBPACK_IMPORTED_MODULE_1__.deleteTask(index);
+}
+function updateTaskIndexes() {
+  _taskManager__WEBPACK_IMPORTED_MODULE_1__.updateTaskIndexes();
 }
 function clearCompletedTasks() {
-  var completedTasks = tasks.filter(function (task) {
-    return task.completed;
-  });
-  completedTasks.forEach(function (task) {
-    var index = tasks.indexOf(task);
-    tasks.splice(index, 1);
-  });
-  renderTasks();
+  _taskManager__WEBPACK_IMPORTED_MODULE_1__.clearCompletedTasks();
 }
-
-// Drag and drop handlers
-var draggedTask = null;
-function handleDragStart(event) {
-  draggedTask = event.target;
+function saveTasksToLocalStorage() {
+  _taskManager__WEBPACK_IMPORTED_MODULE_1__.saveTasksToLocalStorage();
 }
-function handleDragOver(event) {
-  event.preventDefault();
-}
-function handleDrop(event) {
-  event.preventDefault();
-  var droppedTask = event.target;
-  var droppedIndex = Array.from(droppedTask.parentNode.children).indexOf(droppedTask);
-  var draggedIndex = Array.from(draggedTask.parentNode.children).indexOf(draggedTask);
-
-  // Reorder tasks in the array based on the drag and drop
-  if (draggedIndex < droppedIndex) {
-    tasks.splice(droppedIndex, 0, tasks[draggedIndex]);
-    tasks.splice(draggedIndex, 1);
-  } else {
-    tasks.splice(droppedIndex, 0, tasks[draggedIndex]);
-    tasks.splice(draggedIndex + 1, 1);
-  }
-  renderTasks();
+function loadTasksFromLocalStorage() {
+  _taskManager__WEBPACK_IMPORTED_MODULE_1__.loadTasksFromLocalStorage();
 }
 window.addEventListener("DOMContentLoaded", function () {
-  renderTasks();
+  loadTasksFromLocalStorage();
   var taskInput = document.getElementById("task-input");
-  taskInput.addEventListener("keyup", addTask);
+  taskInput.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      var description = taskInput.value.trim();
+      if (description !== "") {
+        addTask(description);
+        taskInput.value = "";
+      }
+    }
+  });
   var clearButton = document.getElementById("clear-button");
   clearButton.addEventListener("click", clearCompletedTasks);
 });
@@ -910,4 +978,4 @@ window.addEventListener("DOMContentLoaded", function () {
 
 /******/ })()
 ;
-//# sourceMappingURL=mainafac14811bc47b4ca3e4.js.map
+//# sourceMappingURL=main8bb1afef5bef7313d677.js.map
