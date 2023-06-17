@@ -76,8 +76,8 @@ The To Do List website provides the following features:
 ## 🚀 Live Demo <a name="live-demo"></a>
 
 <ul>
-  <li><a href=""></a></li>
-  <li><a href=""><img src=""></a></li>
+  <li><a href="https://melybee-07.github.io/To-Do-List/dist/">Live Demo</a></li>
+  <li><a href="https://melybee-07.github.io/To-Do-List/dist/"><img src="./Capture d'écran 2023-06-17 184926.png" width="50%"></a></li>
 </ul>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
