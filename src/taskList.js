@@ -81,6 +81,7 @@ export function renderTaskList(tasks) {
     // Add event listener to the checkbox
     checkbox.addEventListener('change', () => {
       task.completed = checkbox.checked;
+      saveTasks(tasks);
       renderTaskList(tasks);
     });
 

@@ -2,130 +2,208 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/taskManager.js":
-/*!****************************!*\
-  !*** ./src/taskManager.js ***!
-  \****************************/
+/***/ "./src/addTask.js":
+/*!************************!*\
+  !*** ./src/addTask.js ***!
+  \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   addTask: () => (/* binding */ addTask),
-/* harmony export */   clearCompletedTasks: () => (/* binding */ clearCompletedTasks),
-/* harmony export */   deleteTask: () => (/* binding */ deleteTask),
-/* harmony export */   loadTasksFromLocalStorage: () => (/* binding */ loadTasksFromLocalStorage),
-/* harmony export */   saveTasksToLocalStorage: () => (/* binding */ saveTasksToLocalStorage),
-/* harmony export */   updateTaskIndexes: () => (/* binding */ updateTaskIndexes)
+/* harmony export */   addTask: () => (/* binding */ addTask)
 /* harmony export */ });
-var tasks = [];
-function addTask(description) {
+/* harmony import */ var _taskList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskList.js */ "./src/taskList.js");
+
+function addTask(tasks, description) {
   var newTask = {
     description: description,
     completed: false,
     index: tasks.length + 1
   };
   tasks.push(newTask);
-  renderTasks();
-  saveTasksToLocalStorage();
-}
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  updateTaskIndexes();
-  renderTasks();
-  saveTasksToLocalStorage();
-}
-function updateTaskIndexes() {
-  tasks.forEach(function (task, index) {
-    task.index = index + 1;
-  });
-}
-function clearCompletedTasks() {
-  tasks = tasks.filter(function (task) {
-    return !task.completed;
-  });
-  updateTaskIndexes();
-  renderTasks();
-  saveTasksToLocalStorage();
-}
-function saveTasksToLocalStorage() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-function loadTasksFromLocalStorage() {
-  var storedTasks = localStorage.getItem("tasks");
-  if (storedTasks) {
-    tasks = JSON.parse(storedTasks);
-    renderTasks();
-  }
+  (0,_taskList_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)(tasks);
 }
 
 /***/ }),
 
-/***/ "./src/taskRenderer.js":
+/***/ "./src/clearCompletedTasks.js":
+/*!************************************!*\
+  !*** ./src/clearCompletedTasks.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clearCompletedTasks: () => (/* binding */ clearCompletedTasks)
+/* harmony export */ });
+/* harmony import */ var _taskList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskList.js */ "./src/taskList.js");
+
+function clearCompletedTasks(tasks) {
+  var updatedTasks = tasks.filter(function (task) {
+    return !task.completed;
+  });
+  for (var i = 0; i < updatedTasks.length; i += 1) {
+    updatedTasks[i].index = i + 1;
+  }
+  (0,_taskList_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)(updatedTasks);
+}
+
+/***/ }),
+
+/***/ "./src/listUI.js":
+/*!***********************!*\
+  !*** ./src/listUI.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initializeListUI: () => (/* binding */ initializeListUI)
+/* harmony export */ });
+function handleListClick(event) {
+  var listItem = event.target.closest('li');
+  if (!listItem) return;
+  var kebabMenu = listItem.querySelector('.kebab-menu');
+  var trashCanIcon = listItem.querySelector('.trash-can-icon');
+  if (event.target !== kebabMenu && event.target !== trashCanIcon) {
+    if (kebabMenu.style.display === 'none') {
+      kebabMenu.style.display = 'block';
+      trashCanIcon.style.display = 'none';
+      listItem.style.backgroundColor = 'initial';
+    } else {
+      kebabMenu.style.display = 'none';
+      trashCanIcon.style.display = 'block';
+      listItem.style.backgroundColor = 'yellow';
+    }
+  }
+}
+function initializeListUI() {
+  var taskList = document.getElementById('task-list');
+  taskList.addEventListener('click', handleListClick);
+}
+
+/***/ }),
+
+/***/ "./src/localStorage.js":
 /*!*****************************!*\
-  !*** ./src/taskRenderer.js ***!
+  !*** ./src/localStorage.js ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   renderTasks: () => (/* binding */ renderTasks)
+/* harmony export */   loadTasks: () => (/* binding */ loadTasks),
+/* harmony export */   saveTasks: () => (/* binding */ saveTasks)
 /* harmony export */ });
-/* harmony import */ var _assets_kebab_menu_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./assets/kebab-menu.png */ "./src/assets/kebab-menu.png");
-/* harmony import */ var _assets_trash_can_icon_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/trash-can-icon.png */ "./src/assets/trash-can-icon.png");
-/* harmony import */ var _taskManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./taskManager */ "./src/taskManager.js");
+// Function to save the tasks in local storage
+function saveTasks(tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
+// Function to load the tasks from local storage
+function loadTasks() {
+  var storedTasks = localStorage.getItem('tasks');
+  if (storedTasks) {
+    return JSON.parse(storedTasks);
+  }
+  return [];
+}
 
+/***/ }),
 
-function renderTasks() {
-  var deleteTaskHandler = function deleteTaskHandler(index) {
-    (0,_taskManager__WEBPACK_IMPORTED_MODULE_2__.deleteTask)(index);
-  };
-  var taskList = document.getElementById("task-list");
-  taskList.innerHTML = "";
-  _taskManager__WEBPACK_IMPORTED_MODULE_2__.tasks.forEach(function (task, index) {
-    var listItem = document.createElement("li");
-    listItem.draggable = true;
-    var checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = task.completed;
-    checkbox.addEventListener("change", function () {
-      _taskManager__WEBPACK_IMPORTED_MODULE_2__.tasks[index].completed = checkbox.checked;
-      renderTasks();
-      (0,_taskManager__WEBPACK_IMPORTED_MODULE_2__.saveTasksToLocalStorage)();
+/***/ "./src/taskList.js":
+/*!*************************!*\
+  !*** ./src/taskList.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderTaskList: () => (/* binding */ renderTaskList)
+/* harmony export */ });
+/* harmony import */ var _localStorage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./localStorage.js */ "./src/localStorage.js");
+
+function renderTaskList(tasks) {
+  var deleteTask = function deleteTask(task) {
+    var taskIndex = tasks.findIndex(function (t) {
+      return t.index === task.index;
     });
-    var label = document.createElement("label");
-    label.innerText = task.description;
-    label.style.textDecoration = task.completed ? "line-through" : "none";
-    listItem.addEventListener("click", function () {
-      listItem.classList.toggle("selected");
-    });
-    var kebabMenu = document.createElement("div");
-    kebabMenu.className = "kebab-menu";
-    var kebabIconImg = document.createElement("img");
-    kebabIconImg.src = _assets_kebab_menu_png__WEBPACK_IMPORTED_MODULE_0__;
-    kebabIconImg.alt = "Kebab Icon";
-    kebabIconImg.className = "icon";
-    kebabIconImg.addEventListener("click", function (event) {
-      event.stopPropagation();
-      listItem.classList.toggle("selected");
-      renderTasks();
-    });
-    var trashIconImg = document.createElement("img");
-    trashIconImg.src = _assets_trash_can_icon_png__WEBPACK_IMPORTED_MODULE_1__;
-    trashIconImg.alt = "Trash Can Icon";
-    trashIconImg.className = "icon trash-icon";
-    trashIconImg.addEventListener("click", function (event) {
-      event.stopPropagation();
-      deleteTaskHandler(index);
-    });
-    if (task.completed) {
-      kebabIconImg.style.display = "none";
+    if (taskIndex !== -1) {
+      tasks.splice(taskIndex, 1);
+      for (var i = taskIndex; i < tasks.length; i += 1) {
+        tasks[i].index -= 1;
+      }
+      (0,_localStorage_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)(tasks);
+      renderTaskList(tasks);
     }
-    kebabMenu.appendChild(kebabIconImg);
-    kebabMenu.appendChild(trashIconImg);
-    listItem.appendChild(kebabMenu);
+  };
+  var makeTaskDescriptionEditable = function makeTaskDescriptionEditable(taskDescription, task) {
+    taskDescription.contentEditable = true;
+    taskDescription.focus();
+    taskDescription.classList.add('editable');
+    var originalDescription = task.description;
+    taskDescription.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        taskDescription.blur();
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        taskDescription.innerText = originalDescription;
+        taskDescription.blur();
+      }
+    });
+    taskDescription.addEventListener('blur', function () {
+      var newDescription = taskDescription.innerText.trim();
+      taskDescription.contentEditable = false;
+      if (newDescription !== '') {
+        task.description = newDescription;
+        (0,_localStorage_js__WEBPACK_IMPORTED_MODULE_0__.saveTasks)(tasks);
+        renderTaskList(tasks);
+      } else {
+        taskDescription.innerText = originalDescription;
+      }
+    });
+  };
+  var taskList = document.getElementById('task-list');
+  taskList.innerHTML = ''; // Clear previous list
+
+  tasks.forEach(function (task) {
+    var listItem = document.createElement('li');
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.completed;
     listItem.appendChild(checkbox);
-    listItem.appendChild(label);
+    var taskDescription = document.createElement('span');
+    taskDescription.innerText = task.description;
+    if (task.completed) {
+      taskDescription.classList.add('completed');
+    }
+    listItem.appendChild(taskDescription);
+    var kebabMenuIcon = document.createElement('img');
+    kebabMenuIcon.src = 'kebab-menu.png';
+    kebabMenuIcon.alt = 'Kebab Menu';
+    kebabMenuIcon.classList.add('kebab-menu');
+    listItem.appendChild(kebabMenuIcon);
+    var trashCanIcon = document.createElement('img');
+    trashCanIcon.src = 'trash-can-icon.png';
+    trashCanIcon.alt = 'Trash Can';
+    trashCanIcon.classList.add('trash-can-icon');
+    trashCanIcon.style.display = 'none';
+    listItem.appendChild(trashCanIcon);
+
+    // Add event listener to the checkbox
+    checkbox.addEventListener('change', function () {
+      task.completed = checkbox.checked;
+      renderTaskList(tasks);
+    });
+
+    // Add event listener to the trash can icon
+    trashCanIcon.addEventListener('click', function () {
+      deleteTask(task);
+    });
+    taskDescription.addEventListener('click', function () {
+      makeTaskDescriptionEditable(taskDescription, task);
+    });
     taskList.appendChild(listItem);
   });
 }
@@ -153,12 +231,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../assets/refresh_reload_icon.png */ "./src/assets/refresh_reload_icon.png"), __webpack_require__.b);
-var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../assets/kebab-menu.png */ "./src/assets/kebab-menu.png"), __webpack_require__.b);
-var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../assets/trash-can-icon.png */ "./src/assets/trash-can-icon.png"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
-var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
-var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `body {
   font-family: Arial, sans-serif;
@@ -180,7 +254,6 @@ h1 {
 ul {
   list-style-type: none;
   padding: 0;
-  margin-bottom: -10px;
 }
 
 li {
@@ -189,6 +262,8 @@ li {
   padding-bottom: 15px;
   position: relative;
   border-bottom: 1px solid #ccc;
+  margin-top: -14px;
+  padding-top: 12px;
 }
 
 h3 {
@@ -201,55 +276,11 @@ h3::before {
   content: "";
   position: absolute;
   top: 30%;
-  right: 2%;
+  right: 4%;
   width: 20px;
   height: 20px;
   background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
   background-size: cover;
-  cursor: pointer;
-}
-
-li.selected {
-  background-color: yellow;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-.trash-icon {
-  display: none;
-}
-
-li.selected .icon {
-  display: none;
-}
-
-li.selected .trash-icon {
-  display: inline-block;
-}
-
-.kebab-menu {
-  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});
-  background-size: cover;
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  top: 0;
-  right: 36px;
-  cursor: pointer;
-}
-
-.trash-can-icon {
-  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_2___});
-  background-size: cover;
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  top: 0;
-  right: 10px;
   cursor: pointer;
 }
 
@@ -272,14 +303,44 @@ input[type=checkbox] {
   background-color: rgb(235, 235, 235);
   width: 100%;
   padding: 15px;
-  margin-top: 0;
+  margin-top: -14px;
   cursor: pointer;
   font-size: 16px;
 }
 
 #clear-button:hover {
   background-color: rgb(210, 208, 208);
-}`, "",{"version":3,"sources":["webpack://./src/styles/index.css"],"names":[],"mappings":"AAAA;EACE,8BAAA;EACA,SAAA;EACA,aAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,0CAAA;EACA,kBAAA;EACA,iBAAA;AACF;;AAEA;EACE,qBAAA;EACA,UAAA;EACA,oBAAA;AACF;;AAEA;EACE,mBAAA;EACA,kBAAA;EACA,oBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,kBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;EACA,YAAA;EACA,yDAAA;EACA,sBAAA;EACA,eAAA;AACF;;AAEA;EACE,wBAAA;AACF;;AAEA;EACE,WAAA;EACA,YAAA;EACA,eAAA;AACF;;AAEA;EACE,aAAA;AACF;;AAEA;EACE,aAAA;AACF;;AAEA;EACE,qBAAA;AACF;;AAEA;EACE,yDAAA;EACA,sBAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,MAAA;EACA,WAAA;EACA,eAAA;AACF;;AAEA;EACE,yDAAA;EACA,sBAAA;EACA,WAAA;EACA,YAAA;EACA,kBAAA;EACA,MAAA;EACA,WAAA;EACA,eAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,kBAAA;EACA,oBAAA;EACA,eAAA;EACA,YAAA;EACA,6BAAA;EACA,aAAA;AACF;;AAEA;EACE,YAAA;EACA,oCAAA;EACA,WAAA;EACA,aAAA;EACA,aAAA;EACA,eAAA;EACA,eAAA;AACF;;AAEA;EACE,oCAAA;AACF","sourcesContent":["body {\n  font-family: Arial, sans-serif;\n  margin: 0;\n  padding: 20px;\n}\n\nh1 {\n  text-align: center;\n}\n\n#todo-list {\n  width: 40%;\n  box-shadow: 1px 2px 8px rgb(152, 150, 150);\n  border-radius: 4px;\n  margin: 50px auto;\n}\n\nul {\n  list-style-type: none;\n  padding: 0;\n  margin-bottom: -10px;\n}\n\nli {\n  margin-bottom: 10px;\n  padding-left: 10px;\n  padding-bottom: 15px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3 {\n  padding: 15px 10px;\n  position: relative;\n  border-bottom: 1px solid #ccc;\n}\n\nh3::before {\n  content: \"\";\n  position: absolute;\n  top: 30%;\n  right: 2%;\n  width: 20px;\n  height: 20px;\n  background-image: url(\"../assets/refresh_reload_icon.png\");\n  background-size: cover;\n  cursor: pointer;\n}\n\nli.selected {\n  background-color: yellow;\n}\n\n.icon {\n  width: 24px;\n  height: 24px;\n  cursor: pointer;\n}\n\n.trash-icon {\n  display: none;\n}\n\nli.selected .icon {\n  display: none;\n}\n\nli.selected .trash-icon {\n  display: inline-block;\n}\n\n.kebab-menu {\n  background-image: url(\"../assets/kebab-menu.png\");\n  background-size: cover;\n  width: 24px;\n  height: 24px;\n  position: absolute;\n  top: 0;\n  right: 36px;\n  cursor: pointer;\n}\n\n.trash-can-icon {\n  background-image: url(\"../assets/trash-can-icon.png\");\n  background-size: cover;\n  width: 24px;\n  height: 24px;\n  position: absolute;\n  top: 0;\n  right: 10px;\n  cursor: pointer;\n}\n\ninput[type=\"checkbox\"] {\n  margin-right: 15px;\n}\n\n#task-input {\n  width: 97%;\n  padding-left: 12px;\n  padding-bottom: 12px;\n  font-size: 16px;\n  border: none;\n  border-bottom: 1px solid #ccc;\n  outline: none;\n}\n\n#clear-button {\n  border: none;\n  background-color: rgb(235, 235, 235);\n  width: 100%;\n  padding: 15px;\n  margin-top: 0;\n  cursor: pointer;\n  font-size: 16px;\n}\n\n#clear-button:hover {\n  background-color: rgb(210, 208, 208);\n}\n"],"sourceRoot":""}]);
+}
+
+.completed {
+  text-decoration: line-through;
+  color: rgb(127, 122, 122);
+}
+
+.kebab-menu {
+  width: 25px;
+  cursor: move;
+  background-size: cover;
+  height: 24px;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+}
+
+.trash-can-icon {
+  width: 25px;
+  cursor: pointer;
+  background-size: cover;
+  height: 24px;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+}
+
+span.editable {
+  border: none;
+  outline: none;
+}`, "",{"version":3,"sources":["webpack://./src/styles/index.css"],"names":[],"mappings":"AAAA;EACE,8BAAA;EACA,SAAA;EACA,aAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,0CAAA;EACA,kBAAA;EACA,iBAAA;AACF;;AAEA;EACE,qBAAA;EACA,UAAA;AACF;;AAEA;EACE,mBAAA;EACA,kBAAA;EACA,oBAAA;EACA,kBAAA;EACA,6BAAA;EACA,iBAAA;EACA,iBAAA;AACF;;AAEA;EACE,kBAAA;EACA,kBAAA;EACA,6BAAA;AACF;;AAEA;EACE,WAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;EACA,WAAA;EACA,YAAA;EACA,yDAAA;EACA,sBAAA;EACA,eAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,UAAA;EACA,kBAAA;EACA,oBAAA;EACA,eAAA;EACA,YAAA;EACA,6BAAA;EACA,aAAA;AACF;;AAEA;EACE,YAAA;EACA,oCAAA;EACA,WAAA;EACA,aAAA;EACA,iBAAA;EACA,eAAA;EACA,eAAA;AACF;;AAEA;EACE,oCAAA;AACF;;AAEA;EACE,6BAAA;EACA,yBAAA;AACF;;AAEA;EACE,WAAA;EACA,YAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,SAAA;EACA,WAAA;AACF;;AAEA;EACE,WAAA;EACA,eAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,SAAA;EACA,WAAA;AACF;;AAEA;EACE,YAAA;EACA,aAAA;AACF","sourcesContent":["body {\r\n  font-family: Arial, sans-serif;\r\n  margin: 0;\r\n  padding: 20px;\r\n}\r\n\r\nh1 {\r\n  text-align: center;\r\n}\r\n\r\n#todo-list {\r\n  width: 40%;\r\n  box-shadow: 1px 2px 8px rgb(152, 150, 150);\r\n  border-radius: 4px;\r\n  margin: 50px auto;\r\n}\r\n\r\nul {\r\n  list-style-type: none;\r\n  padding: 0;\r\n}\r\n\r\nli {\r\n  margin-bottom: 10px;\r\n  padding-left: 10px;\r\n  padding-bottom: 15px;\r\n  position: relative;\r\n  border-bottom: 1px solid #ccc;\r\n  margin-top: -14px;\r\n  padding-top: 12px;\r\n}\r\n\r\nh3 {\r\n  padding: 15px 10px;\r\n  position: relative;\r\n  border-bottom: 1px solid #ccc;\r\n}\r\n\r\nh3::before {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 30%;\r\n  right: 4%;\r\n  width: 20px;\r\n  height: 20px;\r\n  background-image: url(\"../assets/refresh_reload_icon.png\");\r\n  background-size: cover;\r\n  cursor: pointer;\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  margin-right: 15px;\r\n}\r\n\r\n#task-input {\r\n  width: 97%;\r\n  padding-left: 12px;\r\n  padding-bottom: 12px;\r\n  font-size: 16px;\r\n  border: none;\r\n  border-bottom: 1px solid #ccc;\r\n  outline: none;\r\n}\r\n\r\n#clear-button {\r\n  border: none;\r\n  background-color: rgb(235, 235, 235);\r\n  width: 100%;\r\n  padding: 15px;\r\n  margin-top: -14px;\r\n  cursor: pointer;\r\n  font-size: 16px;\r\n}\r\n\r\n#clear-button:hover {\r\n  background-color: rgb(210, 208, 208);\r\n}\r\n\r\n.completed {\r\n  text-decoration: line-through;\r\n  color: rgb(127, 122, 122);\r\n}\r\n\r\n.kebab-menu {\r\n  width: 25px;\r\n  cursor: move;\r\n  background-size: cover;\r\n  height: 24px;\r\n  position: absolute;\r\n  top: 12px;\r\n  right: 20px;\r\n}\r\n\r\n.trash-can-icon {\r\n  width: 25px;\r\n  cursor: pointer;\r\n  background-size: cover;\r\n  height: 24px;\r\n  position: absolute;\r\n  top: 12px;\r\n  right: 20px;\r\n}\r\n\r\nspan.editable {\r\n  border: none;\r\n  outline: none;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -761,16 +822,6 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ "./src/assets/kebab-menu.png":
-/*!***********************************!*\
-  !*** ./src/assets/kebab-menu.png ***!
-  \***********************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "kebab-menu.png";
-
-/***/ }),
-
 /***/ "./src/assets/refresh_reload_icon.png":
 /*!********************************************!*\
   !*** ./src/assets/refresh_reload_icon.png ***!
@@ -778,16 +829,6 @@ module.exports = __webpack_require__.p + "kebab-menu.png";
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__.p + "refresh_reload_icon.png";
-
-/***/ }),
-
-/***/ "./src/assets/trash-can-icon.png":
-/*!***************************************!*\
-  !*** ./src/assets/trash-can-icon.png ***!
-  \***************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "trash-can-icon.png";
 
 /***/ })
 
@@ -935,47 +976,45 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/index.css */ "./src/styles/index.css");
-/* harmony import */ var _taskManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./taskManager */ "./src/taskManager.js");
-/* harmony import */ var _taskRenderer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./taskRenderer */ "./src/taskRenderer.js");
+/* harmony import */ var _taskList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskList.js */ "./src/taskList.js");
+/* harmony import */ var _addTask_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addTask.js */ "./src/addTask.js");
+/* harmony import */ var _listUI_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./listUI.js */ "./src/listUI.js");
+/* harmony import */ var _localStorage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage.js */ "./src/localStorage.js");
+/* harmony import */ var _clearCompletedTasks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./clearCompletedTasks.js */ "./src/clearCompletedTasks.js");
+/* harmony import */ var _styles_index_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles/index.css */ "./src/styles/index.css");
 
 
 
-function addTask(description) {
-  _taskManager__WEBPACK_IMPORTED_MODULE_1__.addTask(description);
-}
-function deleteTask(index) {
-  _taskManager__WEBPACK_IMPORTED_MODULE_1__.deleteTask(index);
-}
-function updateTaskIndexes() {
-  _taskManager__WEBPACK_IMPORTED_MODULE_1__.updateTaskIndexes();
-}
-function clearCompletedTasks() {
-  _taskManager__WEBPACK_IMPORTED_MODULE_1__.clearCompletedTasks();
-}
-function saveTasksToLocalStorage() {
-  _taskManager__WEBPACK_IMPORTED_MODULE_1__.saveTasksToLocalStorage();
-}
-function loadTasksFromLocalStorage() {
-  _taskManager__WEBPACK_IMPORTED_MODULE_1__.loadTasksFromLocalStorage();
-}
-window.addEventListener("DOMContentLoaded", function () {
-  loadTasksFromLocalStorage();
-  var taskInput = document.getElementById("task-input");
-  taskInput.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-      var description = taskInput.value.trim();
-      if (description !== "") {
-        addTask(description);
-        taskInput.value = "";
-      }
+
+
+
+var tasks = (0,_localStorage_js__WEBPACK_IMPORTED_MODULE_3__.loadTasks)();
+var taskInput = document.getElementById('task-input');
+taskInput.addEventListener('keydown', function (event) {
+  if (event.key === 'Enter') {
+    var description = taskInput.value.trim();
+    if (description !== '') {
+      (0,_addTask_js__WEBPACK_IMPORTED_MODULE_1__.addTask)(tasks, description);
+      taskInput.value = '';
+      (0,_localStorage_js__WEBPACK_IMPORTED_MODULE_3__.saveTasks)(tasks);
     }
+  }
+});
+window.addEventListener('DOMContentLoaded', function () {
+  (0,_taskList_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)(tasks);
+  (0,_listUI_js__WEBPACK_IMPORTED_MODULE_2__.initializeListUI)();
+  var clearButton = document.getElementById('clear-button');
+  clearButton.addEventListener('click', function () {
+    tasks = tasks.filter(function (task) {
+      return !task.completed;
+    });
+    (0,_clearCompletedTasks_js__WEBPACK_IMPORTED_MODULE_4__.clearCompletedTasks)(tasks);
+    (0,_taskList_js__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)(tasks);
+    (0,_localStorage_js__WEBPACK_IMPORTED_MODULE_3__.saveTasks)(tasks);
   });
-  var clearButton = document.getElementById("clear-button");
-  clearButton.addEventListener("click", clearCompletedTasks);
 });
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=main8bb1afef5bef7313d677.js.map
+//# sourceMappingURL=main5bd35c8d514c0628ef6e.js.map
