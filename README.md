@@ -76,7 +76,7 @@ The To Do List website provides the following features:
 ## 🚀 Live Demo <a name="live-demo"></a>
 
 <ul>
-  <li><a href="">comming soon ...</a></li>
+  <li><a href=""></a></li>
   <li><a href=""><img src=""></a></li>
 </ul>
 
