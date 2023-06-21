@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1687361304039" clover="3.2.0">
+  <project timestamp="1687361304040" name="All files">
+    <metrics statements="17" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="6" coveredmethods="0" elements="27" coveredelements="0" complexity="0" loc="17" ncloc="17" packages="1" files="4" classes="4"/>
+    <file name="addTask.js" path="C:\A_MELISSA\To-Do-List\src\addTask.js">
+      <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+      <line num="10" count="0" type="stmt"/>
+    </file>
+    <file name="clearCompletedTasks.js" path="C:\A_MELISSA\To-Do-List\src\clearCompletedTasks.js">
+      <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+    </file>
+    <file name="editTask.js" path="C:\A_MELISSA\To-Do-List\src\editTask.js">
+      <metrics statements="5" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <line num="5" count="0" type="stmt"/>
+      <line num="6" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+    </file>
+    <file name="localStorage.js" path="C:\A_MELISSA\To-Do-List\src\localStorage.js">
+      <metrics statements="5" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <line num="3" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="9" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="10" count="0" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>
